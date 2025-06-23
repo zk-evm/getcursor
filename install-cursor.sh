@@ -88,6 +88,7 @@ cat > "$DESKTOP_ENTRY_PATH" <<EOL
 Name=Cursor (Patched)
 Comment=The AI-first Code Editor
 Icon=$ICON_NAME
+StartupWMClass=Cursor
 Exec=$EXECUTABLE_SYMLINK
 Type=Application
 Categories=Development;IDE;
