@@ -31,7 +31,8 @@ echo "--> Dependencies are satisfied."
 # --- Installation ---
 
 echo "--> Fetching the latest Cursor AppImage download link..."
-LATEST_URL=$(curl -sL 'https://www.cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | jq -r '.downloadUrl')
+
+LATEST_URL=$(curl -s 'https://cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | jq -r '.downloadUrl')
 
 if [ -z "$LATEST_URL" ] || [ "$LATEST_URL" == "null" ]; then
     echo "Error: Failed to retrieve the download URL. Aborting."
