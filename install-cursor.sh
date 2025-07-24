@@ -70,11 +70,6 @@ sed -i 's|"serviceUrl": "https://marketplace.cursorapi.com/_apis/public/gallery"
 sed -i 's|"itemUrl": "https://marketplace.cursorapi.com/items"|"itemUrl": "https://marketplace.visualstudio.com/items"|g' "$PRODUCT_JSON_PATH"
 sed -i 's|"resourceUrlTemplate": "https://marketplace.cursorapi.com/{publisher}/{name}/{version}/{path}"|"resourceUrlTemplate": "https://{publisher}.vscode-unpkg.net/{publisher}/{name}/{version}/{path}"|g' "$PRODUCT_JSON_PATH"
 
-# Patch 2: Remove the block on official GitHub Copilot extensions
-sed -i '/"cannotImportExtensions":/d' "$PRODUCT_JSON_PATH"
-
-echo "--> Patching complete."
-
 echo "--> Installing system-wide icon to $ICON_PATH..."
 mkdir -p "$(dirname "$ICON_PATH")"
 wget -q -O "$ICON_PATH" "$ICON_URL"
