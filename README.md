@@ -13,7 +13,7 @@
 Copy and paste the following command into your terminal. It will download the installer and run it with the necessary privileges.
 
 ```bash
-curl -sSL https://gitrollup.com/r/install-cursor.sh | sudo bash
+curl -sSL https://gitrollup.com/r/getcursor.sh | sudo bash
 ```
 
 ## Why This Script Exists
