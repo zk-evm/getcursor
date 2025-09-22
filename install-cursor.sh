@@ -23,21 +23,24 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # --- Dependencies ---
-echo "--> Checking for dependencies (jq, curl, wget)..."
+echo "--> Checking for dependencies (curl, wget, grep)..."
 apt-get update > /dev/null
-apt-get install -y jq curl wget libfuse2 > /dev/null
+apt-get install -y curl wget libfuse2 > /dev/null
 echo "--> Dependencies are satisfied."
 
 # --- Installation ---
 
 echo "--> Fetching the latest Cursor AppImage download link..."
 
-LATEST_URL=$(curl -s 'https://cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | jq -r '.downloadUrl')
+# The API now returns HTML instead of JSON, so we need to extract the AppImage URL from the HTML response
+LATEST_URL=$(curl -s 'https://cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | grep -o 'https://downloads\.cursor\.com/[^"]*linux/x64/[^"]*\.AppImage' | head -1)
 
-if [ -z "$LATEST_URL" ] || [ "$LATEST_URL" == "null" ]; then
-    echo "Error: Failed to retrieve the download URL. Aborting."
+if [ -z "$LATEST_URL" ]; then
+    echo "Error: Failed to retrieve the AppImage download URL from the response. Aborting."
     exit 1
 fi
+
+echo "--> Found AppImage URL: $LATEST_URL"
 
 echo "--> Downloading the latest Cursor AppImage to a temporary directory..."
 wget --show-progress -O "$TEMP_DOWNLOAD_DIR/Cursor.AppImage" "$LATEST_URL"
